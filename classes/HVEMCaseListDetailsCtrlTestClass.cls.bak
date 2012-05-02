@@ -92,7 +92,7 @@ public class HVEMCaseListDetailsCtrlTestClass{
         }                        
 
         System.runAs(userObj){
-           /* grpObj = new Group(Name='TestGroup', Type='Queue');
+            grpObj = new Group(Name='TestGroup', Type='Queue');
             insert grpObj;
             grpObjNew = new Group(Name='TestGroupNew', Type='Queue');
             insert grpObjNew;
@@ -101,13 +101,13 @@ public class HVEMCaseListDetailsCtrlTestClass{
             grpMemberObjNew = new GroupMember(UserOrGroupId=userObj.Id,GroupId=grpObjNew.Id);
             insert grpMemberObjNew;
             QueueSobject queueSObjectInstance = new QueueSobject(QueueId = grpObjNew.id, SobjectType = 'Case');
-            insert queueSObjectInstance;*/
-            caseObj = new Case(status='New',Origin='Phone', ownerId = userObj.id);
+            insert queueSObjectInstance;
+            caseObj = new Case(status='New',Origin='Phone', ownerId = grpObjNew.id);
             insert caseObj;
         }
         DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'approval',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='');                                                                                  
         insert DEMInstance;
-        EmailMessage emailInstance = new EmailMessage(parentId=caseObj.id,subject ='text1');
+        EmailMessage emailInstance = new EmailMessage(parentId=caseObj.id,status='3');
         insert emailInstance;
 
     }
@@ -197,49 +197,6 @@ public class HVEMCaseListDetailsCtrlTestClass{
         System.assertEquals(true, HVEMCaseListDetailsCtrlObj.loggedUserInstance != null);
         test.stopTest();
     }
-    //new changes---------------------------
-     static void datafordraftsCaseListFunElse(){
-        HVEMCaseListDetailsCtrlObj = new HVEMCaseListDetailsCtrl(); 
-        HVEMCaseListDetailsCtrlObj.draftsEmailList = new List< DraftEmailMessage__c>();
-        HVEMCaseListDetailsCtrlObj.queueId = '' + userInfo.getUserId();
-        HVEMCaseListDetailsCtrlObj.queuePageId = '' + userInfo.getUserId();
-        userObj = [SELECT Id, Name FROM USER WHERE Id=:userInfo.getUserId()];
-        caseObj = new Case(status='New',Origin='Phone');
-        insert caseObj;
-
-        demObj = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Rejected',ToAddress__c='test@hvem.com');
-        insert demObj;
-        System.runAs(userObj){
-            grpObj = new Group(Name='TestGroup', Type='Queue');
-            insert grpObj;
-            grpMemberObj = new GroupMember(UserOrGroupId=userObj.Id,GroupId=grpObj.Id);
-            insert grpMemberObj;
-        }
-
-        HVEMCaseListDetailsCtrlObj.caseId = caseObj.Id;
-        selectedCase = new Case(Subject ='abcd');
-        insert selectedCase;
-        caseId = selectedCase.Id; 
-
-    }
-    static testMethod void testdraftsCaseListFunElsePart()
-    {
-        datafordraftsCaseListFunElse();
-        test.startTest();
-        HVEMCaseListDetailsCtrlObj.draftsCaseListFunc();
-        System.assertEquals('Rejected', demObj.status__c);
-        test.stopTest();
-    }
-     
-    static testMethod void testdraftsCaseListNegative()
-    {
-        datafordraftsCaseListFunElse();
-        test.startTest();
-        HVEMCaseListDetailsCtrlObj.refreshCaseQueueList();
-        System.assertEquals('Rejected', demObj.status__c);
-        test.stopTest();
-    }
-    
     static testMethod void testcontroller()
     {
         testdata();
@@ -272,7 +229,7 @@ public class HVEMCaseListDetailsCtrlTestClass{
         }                        
 
         System.runAs(userObj){
-            /*grpObj = new Group(Name='TestGroup', Type='Queue');
+            grpObj = new Group(Name='TestGroup', Type='Queue');
             insert grpObj;
             grpObjNew = new Group(Name='TestGroupNew', Type='Queue');
             insert grpObjNew;
@@ -281,15 +238,15 @@ public class HVEMCaseListDetailsCtrlTestClass{
             grpMemberObjNew = new GroupMember(UserOrGroupId=userObj.Id,GroupId=grpObjNew.Id);
             insert grpMemberObjNew;
             QueueSobject queueSObjectInstance = new QueueSobject(QueueId = grpObjNew.id, SobjectType = 'Case');
-            insert queueSObjectInstance;*/
-            caseObj = new Case(status='New',Origin='Phone', ownerId = userObj.id);
+            insert queueSObjectInstance;
+            caseObj = new Case(status='New',Origin='Phone', ownerId = grpObjNew.id);
             insert caseObj;
         }
         DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Draft',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='<div><label>Hello</label</div>');                                                                                  
         insert DEMInstance;
 
         latestEmailSentList = new List<EmailMessage>();
-        latestEmailSent= new EmailMessage(parentId=caseObj.id,Subject = 'testing');
+        latestEmailSent= new EmailMessage(parentId=caseObj.id,status='3');
         insert latestEmailSent;
 
     }
@@ -349,7 +306,7 @@ public class HVEMCaseListDetailsCtrlTestClass{
         test.startTest();
         HVEMCaseListDetailsCtrlObj = new HVEMCaseListDetailsCtrl(); 
         test.stopTest(); 
-        System.assertEquals(true,HVEMCaseListDetailsCtrlObj.configoptions!=null);
+        System.assertEquals(true,latestEmailSentList.size()>0);
     }
 
     static void setupdataRefreshcaseBothListNull()
@@ -378,17 +335,15 @@ public class HVEMCaseListDetailsCtrlTestClass{
             insert grpMemberObjNew;
             QueueSobject queueSObjectInstance = new QueueSobject(QueueId = grpObjNew.id, SobjectType = 'Case');
             insert queueSObjectInstance;
-            caseObj = new Case(status='New',Origin='Phone');
+            caseObj = new Case(status='New',Origin='Phone', ownerId = grpObjNew.id);
             insert caseObj;
         }
-       // DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Draft',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='<div><label>Hello</label</div>');                                                                                  
-       // insert DEMInstance;
-        DEMInstance = new DraftEmailMessage__c(Case__c = caseObj.id,status__c = 'Approval',ToAddress__c='test@hvem.com');                                                                                  
+        DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Draft',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='<div><label>Hello</label</div>');                                                                                  
         insert DEMInstance;
         latestEmailSentList = new List<EmailMessage>();
         latestEmailSentList =[SELECT Subject,SystemModstamp,parent.Status,parent.Owner.Name, parent.caseNumber, parent.Contact.Name,parent.IsEscalated, parent.Subject FROM EmailMessage];
         delete latestEmailSentList;
-        //latestEmailSent= new EmailMessage(); 
+        latestEmailSent= new EmailMessage(); 
 
     }
 
@@ -399,7 +354,7 @@ public class HVEMCaseListDetailsCtrlTestClass{
         test.startTest();
         HVEMCaseListDetailsCtrlObj = new HVEMCaseListDetailsCtrl(); 
         test.stopTest(); 
-        System.assertEquals(true,HVEMCaseListDetailsCtrlObj.configOptions!=null);
+        System.assertEquals(true,latestEmailSentList.size()>0);
     }
 
 
@@ -420,27 +375,22 @@ public class HVEMCaseListDetailsCtrlTestClass{
 
         System.runAs(userObj){
 
-           /* grpObjNew = new Group(Name='TestGroupNew', Type='Queue');
+            grpObjNew = new Group(Name='TestGroupNew', Type='Queue');
             insert grpObjNew;
 
             grpMemberObjNew = new GroupMember(UserOrGroupId=userObj.Id,GroupId=grpObjNew.Id);
-            insert grpMemberObjNew;*/
+            insert grpMemberObjNew;
 
             List<Case> fullList = [SELECT id From Case];
             delete fullList;
-            caseObj = new Case(status='closed',Origin='Phone',OwnerId = userObj.Id);
+            caseObj = new Case(status='closed',Origin='Phone');
             insert caseObj;
 
         }
-        DEMInstance = new DraftEmailMessage__c(Case__c = caseObj.id,status__c = 'Approval',ToAddress__c='test@hvem.com');                                                                                  
-        insert DEMInstance;
-        EmailmessageObj = new EmailMessage(subject='text',ParentId = caseObj.id,Incoming = false);
-        insert EmailmessageObj;
-        
-       /* DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Approval',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='<div><label>Hello</label</div>');                                                                                  
+        DEMInstance = new DraftEmailMessage__c(case__c = caseObj.id,status__c = 'Approval',ToAddress__c='test@hvem.com',EmailTemplate_Type__c='None',HtmlBody__c='<div><label>Hello</label</div>');                                                                                  
         insert DEMInstance;
         latestEmailSent= new EmailMessage(parentId=caseObj.id,status='3');
-        insert latestEmailSent;*/
+        insert latestEmailSent;
 
         HVEMCaseListDetailsCtrlObj.isDrafts = false;
     }
@@ -451,47 +401,11 @@ public class HVEMCaseListDetailsCtrlTestClass{
         ApexPages.currentPage().getParameters().put('Id',caseObj.Id); 
         test.startTest();
         HVEMCaseListDetailsCtrlObj.refreshCaseQueueList();  
-        System.assertEquals(true,HVEMCaseListDetailsCtrlObj.configOptions!=null);
         HVEMCaseListDetailsCtrlObj.isDrafts = true;
         HVEMCaseListDetailsCtrlObj.refreshCaseQueueList(); 
-        delete DEMInstance;
-        delete EmailmessageObj;
-        HVEMCaseListDetailsCtrlObj.refreshCaseQueueList();
         test.stopTest(); 
 
     }
-  // new chnages--------------------------
-   static void dataForRefreshcaseListElsePart()
-    {
 
-        HVEMCaseListDetailsCtrlObj = new HVEMCaseListDetailsCtrl(); 
-        HVEMCaseListDetailsCtrlObj.queueId = '' + userInfo.getUserId();
-
-        HVEMCaseListDetailsCtrlObj.refreshListParam = 'fromRefresh';
-        userObj = [SELECT Id, Name FROM USER WHERE Id=:userInfo.getUserId()];        
-       
-        List<HVEM_Config_Options__c> config_list = [select Id from HVEM_Config_Options__c];
-        delete config_list;
-        System.runAs(userObj){
-
-            List<Case> fullList = [SELECT id From Case];
-            delete fullList;
-            caseObj = new Case(status='new',OwnerId = userObj.id,IsEscalated=false);
-            insert caseObj;
-
-        }
-        EmailmessageObj = new EmailMessage(subject='text',ParentId = caseObj.id,Incoming = false);
-        insert EmailmessageObj;
-    }
-   static testMethod void testForRefreshcaseListElsePart()
-    {
-        dataForRefreshcaseListElsePart();
-        ApexPages.currentPage().getParameters().put('Id',caseObj.Id); 
-        test.startTest();
-        HVEMCaseListDetailsCtrlObj.refreshCaseQueueList();  
-        System.assertEquals(true,HVEMCaseListDetailsCtrlObj.configOptions==null);
-        test.stopTest(); 
-    }
-  
 
 }

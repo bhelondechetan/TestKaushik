@@ -401,8 +401,7 @@ public with Sharing class HVEMSettingsCtrl{
          baseURL = configOptions.Article_Link_Base_URL__c;
          replyToAddress = configOptions.Reply_To_Mail__c;
          autoPopulate = configOptions.Auto_Populate_To_Field_From_Case_Contact__c ;
-         templates = configOptions.Default_Email_Template__c; 
-         folders = configOptions.Default_Email_Folder__c;       
+         templates = configOptions.Default_Email_Template__c;        
          strChosenCategoryGroups = configOptions.Data_Category_Group_Filter__c;
          availableCategoryGroups = configOptions.Available_Data_Category_Group_Filter__c;
          strChosenArticleTypes = configOptions.Article_Types_Filter__c;        
@@ -419,19 +418,14 @@ public with Sharing class HVEMSettingsCtrl{
          if(selectedPublicGroups!=null && selectedPublicGroups.length() > 1)
              toSaveList = selectedPublicGroups.split(',');
          try{
-               if(templates !=''){
-                folders = configOptions.Default_Email_Folder__c;
-               }
-         
-             /*if(templates !='None'){
+             if(templates !='None'){
                  //emailtemplate = [select FolderId from EmailTemplate where id=:templates];
                  //folders = emailtemplate.FolderId;
                  folders = configOptions.Default_Email_Folder__c;
              }
-            else{
-               //  folders='None';
-               folders = configOptions.Default_Email_Folder__c;
-             } */ 
+             else{
+                 folders='None';
+             }     
          }
          catch(Exception e){
              folders='None';

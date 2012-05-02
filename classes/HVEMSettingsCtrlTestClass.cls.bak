@@ -43,7 +43,7 @@ private class HVEMSettingsCtrlTestClass {
     static List<EmailTemplate> templateList;
     static List<Folder> folderList;
     static Folder folderObj;
-    //static Map<String,String> apiLabelFilterMap;
+    static Map<String,String> apiLabelFilterMap;
     static String inputString;
 
     static void setTestData() {
@@ -101,7 +101,7 @@ private class HVEMSettingsCtrlTestClass {
         hvenSettings.chosenCategoryGroups='category1, category2';   
         hvenSettings.selectedPublicGroupsExtended='';   
         hvenSettings.replyToBlankError=true;
-        //apiLabelFilterMap = new  Map<String,String>();
+        apiLabelFilterMap = new  Map<String,String>();
     }
     static void testDataverify()
     {
@@ -194,7 +194,7 @@ private class HVEMSettingsCtrlTestClass {
     static testMethod void testremoveMapping() {
         setTestData();
         Test.startTest();
-       // hvenSettings.apiLabelFilterMap.put('Test1','test2');
+        apiLabelFilterMap.put('Test1','test2');
         hvenSettings.removeMapping();
         configOptions = new HVEM_Config_Options__c();
         configOptions = HVEM_Config_Options__c.getInstance('HVEM');
@@ -409,7 +409,7 @@ private class HVEMSettingsCtrlTestClass {
     } 
 
 
-  static void setDatavalidateBeforeInsertNegative()
+ /* static void setDatavalidateBeforeInsertNegative()
     {
         hvenSettings = new HVEMSettingsCtrl();
         configOptions = new HVEM_Config_Options__c();
@@ -426,7 +426,7 @@ private class HVEMSettingsCtrlTestClass {
             configOptions.Allow_Draft_Approval__c=true;
             configOptions.Under_Approval_Case_Status__c='Process'; 
             configOptions.Public_Groups_With_No_Approval__c ='servicegroup';
-            configOptions.Public_Groups_With_No_Approval_Extended__c='servicegroup1';
+            configOptions.Public_Groups_With_No_Approval_Extended__c='servicegruop1';
             configOptions.Case_Mappin_API__c='testing';
             configOptions.Case_Mapping_Label__c='textHVEM';
             insert configOptions;
@@ -457,50 +457,21 @@ private class HVEMSettingsCtrlTestClass {
         hvenSettings.templates='abcd';
         hvenSettings.availableCategoryGroups='test1 , test2';
         hvenSettings.enableDraftEmails=true;
-        hvenSettings.selectedPublicGroups='servicce hello';
+        hvenSettings.selectedPublicGroups='servicegroup';
         hvenSettings.chosenCategoryGroups='category1, category2';   
         hvenSettings.selectedPublicGroupsExtended='';   
         hvenSettings.replyToBlankError=true;
-        hvenSettings.baseURL='testing@hvem.com';
-         
+        inputString = 'validation';
     }
 
     static testMethod void testvalidateNegative()
     {
         setDatavalidateBeforeInsertNegative();
         Test.startTest();
-        hvenSettings.verifyBaseURL();
-        hvenSettings.saveTOCustomSettings();
+        hvenSettings.addMapping();
         System.assertEquals(true,configOptions!=null);
-       /* for(Integer i=0;i<20;i++){
-             hvenSettings.selectedPublicGroups += hvenSettings.selectedPublicGroups ;
-             }
-        hvenSettings.selectedPublicGroupsExtended='bbbbbbbbbbb';*/
-        hvenSettings.replyToAddress = 'testing@hvem.com@hvem';
-        hvenSettings.saveTOCustomSettings();
-        System.assertEquals(true,hvenSettings.selectedPublicGroupsExtended.length() < 240);
-       
-        /*List<HVEM_Config_Options__c> config_list = [select Id from HVEM_Config_Options__c];
-        delete config_list;
-        System.assertEquals(true,configOptions==null);
-        configOptions = new HVEM_Config_Options__c(Name='xyz',Case_Mappin_API__c='testing',Case_Mapping_Label__c='textHVEM');
-        insert configOptions;
-        hvenSettings = new HVEMSettingsCtrl();
-        hvenSettings.saveTOCustomSettings();*/
         Test.stopTest();
-    }
-  /* static testMethod void data1(){
-      
-      configOptions = HVEM_Config_Options__c();
-      configOptions.Name = 'xyz';
-      configOptions.Case_Mappin_API__c = 'testing';
-      configOptions.Case_Mapping_Label__c = 'textHVEM';
-      insert configOptions;
-      Test.startTest();
-      hvenSettings = new HVEMSettingsCtrl();
-        hvenSettings.saveTOCustomSettings();
-      Test.stopTest(); 
-   
-   }*/
-   
+    }*/
+
+
 }

@@ -980,10 +980,6 @@ public with Sharing class HVEMEmailEditorCompCtrl {
                 lDraftEmailMessageInstance.TextBody__c = emailBody;
                 lDraftEmailMessageInstance.EmailTemplate_Type__c = 'text';
                 lDraftEmailMessageInstance.HtmlBody__c = '';
-            }else{
-                lDraftEmailMessageInstance.TextBody__c = emailBody;
-                lDraftEmailMessageInstance.EmailTemplate_Type__c = 'text';
-                lDraftEmailMessageInstance.HtmlBody__c = '';
             }
             
           /*  if(currentDraft.size() == 1){

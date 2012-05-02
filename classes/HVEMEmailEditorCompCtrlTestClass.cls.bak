@@ -702,7 +702,69 @@ private class HVEMEmailEditorCompCtrlTestClass {
            Test.stopTest();
      }
      //---new chnages------------------------------------------------------
-   
+   /*static testMethod void dataForElsePart()
+     {
+        User u = [SELECT id,name FROM User WHERE id = :userInfo.getUserid()];
+        u.HVEM_User__c = true;
+        update u;
+        User u = [SELECT Id, IsActive FROM User WHERE IsActive = false];
+         u.IsActive = false;
+         update u;
+        contactInstance = new Contact(LastName='TestClass', Email = 'testclasses@persistent.co.i');
+        insert contactInstance;
+        caseInstance = new Case(status='New',Origin='Phone',contactId=contactInstance.id);
+        insert caseInstance;
+           User userobj= new User(FirstName='aaa',LastName='zzzz',Username='user@dem.com',Email='abcd@dem.com');
+        System.runAs(u){
+                  
+            insert userobj;
+        }
+        
+        selectedEmailTemplate = new EmailTemplate(FolderId = u.Id,TemplateType = 'text',DeveloperName = 'TestDeveloper',Name= 'Test name',Subject = 'Test Subject',Body = 'Hello This is test body',isActive=true);
+        //orgIns = new Organization();
+        System.runAs(u){
+                  
+            insert selectedEmailTemplate;
+        }
+        if(HVEM_Config_Options__c.getInstance('HVEM') == null){
+            configOptions = new HVEM_Config_Options__c(name='HVEM',Default_Email_Template__c = 'None',Allow_Draft_Approval__c = false,Default_Email_Folder__c='None',Allow_Drafts__c=true);
+            insert configOptions;
+        }
+        else{
+            configOptions = HVEM_Config_Options__c.getInstance('HVEM');
+        }
+        emailBody = 'Sample text for Email Body.';
+        configOptions.Allow_Draft_Approval__c = true;
+        ApexPages.currentPage().getParameters().put('Id',caseInstance.Id);
+      
+        emailEditor = new HVEMEmailEditorCompCtrl(); 
+         
+        draftInstance = new DraftEmailMessage__c(Status__c='Approval',BccAddress__c='abc@xyz.com',Case__c = caseInstance.Id,CcAddress__c='abc@xyz.com',TextBody__c ='',TemplateId__c = selectedEmailTemplate.id,HtmlBody__c='<div><label>Hello</label></div>');          
+        insert draftInstance;
+
+        emailBody = 'Sample text for Email Body this is emailbody.';
+        emailEditor.folders = configOptions.Default_Email_Folder__c; 
+        emailEditor.additionalToAddress = 'abc@xyz.com;';
+        emailEditor.ccAddress= 'abc@xyz.com;';
+        emailEditor.bccAddress= 'abc@xyz.com;';
+     }
+   static testMethod void testForElsePart(){ 
+         dataForElsePart();
+         Test.startTest();
+         emailEditor.sendAndNextAction();
+         emailEditor.enableDraftEmails =true;
+         // emailEditor.sendAndNextAction();
+         Test.stopTest();
+     }
+     
+     static testMethod void getEmailTemplatesTest1(){
+        dataForElsePart(); 
+        Test.startTest(); 
+        List<SelectOption> emailTemplateList1 = emailEditor.getEmailTemplates();       
+        Test.stopTest();
+        System.assertEquals(true,emailTemplateList1.size() > 0);
+     }*/
+     
      
      static void dataForNullTextBody()
      {
