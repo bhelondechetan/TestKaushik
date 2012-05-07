@@ -1,13 +1,13 @@
 @ istest
 public class HVEMApprovalProcessActionTest
 {
-			public static DraftEmailMessage__c demInstance;
-			public static Case caseInstance;
-			public static Contact contactInstance;
-			public static Task taskInstance; 
-			public static HVEM_Config_Options__c configOptions;
-			public static  EmailTemplate selectedEmailTemplate ;
-			static testMethod void setUpData()
+						public static DraftEmailMessage__c demInstance;
+						public static Case caseInstance;
+						public static Contact contactInstance;
+						public static Task taskInstance; 
+						public static HVEM_Config_Options__c configOptions;
+						public static  EmailTemplate selectedEmailTemplate ;
+						static testMethod void setUpData()
 	{
 		configOptions = new HVEM_Config_Options__c();
 
