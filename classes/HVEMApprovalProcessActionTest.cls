@@ -1,7 +1,7 @@
 @ istest
 public class HVEMApprovalProcessActionTest
 {
-				public static DraftEmailMessage__c demInstance123;
+				public static DraftEmailMessage__c demInstance;
 					public static Case caseInstance;
 					public static Contact contactInstance;
 					public static Task taskInstance; 
