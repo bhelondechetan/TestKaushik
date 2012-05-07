@@ -32,17 +32,17 @@ OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 public with Sharing class HVEMCaseListDetailsCtrl {
-			public Map<Id,GroupMember> loggedInUserQueueMap {get; set;}
-			public List<Case> loggedInUserCaseList {get; set;}
-			public List<Case> casesInQueueList{get; set;}
-			public List<AssignedCaseList> loggedUserCaseInnerList {get; set;}
+					public Map<Id,GroupMember> loggedInUserQueueMap {get; set;}
+					public List<Case> loggedInUserCaseList {get; set;}
+					public List<Case> casesInQueueList{get; set;}
+					public List<AssignedCaseList> loggedUserCaseInnerList {get; set;}
 	public List<AggregateResult> caseCountQueue {get; set;}
 	public Id selectedQueue {get; set;}
 	public List<QueueCount> queueCountList {get; set;}
 	public List<DraftEmailMessage__c> draftsEmailList {get; set;}
 	public List<Case> cloneLoggedInCaseList{get; set;}
 	public List<Case> idList{get; set;}
-	public Id queueId {get; set;}
+	public Id queueId123 {get; set;}
 	public Id caseId {get; set;}
 	public String caseListErrorMessage{get; set;}
 	public String queueListErrorMessage{get; set;}
